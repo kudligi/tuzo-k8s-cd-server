@@ -173,8 +173,15 @@ Profiles = {
                 "Organizations": Organizations[1:]
             }
         }
-        }
+    }
 }
+
+Channel_profile_template = {
+    "Consortium": "TheConsortium",
+    "Application": Application,
+}
+
+
 
 Profiles["OrdererGenesis"].update(Channel)
 
