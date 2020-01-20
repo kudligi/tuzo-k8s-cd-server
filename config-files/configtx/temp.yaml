@@ -60,7 +60,7 @@ Capabilities:
     v1_4_2: true
 Application:
   Organizations: 
-  Policies:
+  Policies: &id009
     Readers:
       Type: ImplicitMeta
       Rule: '"ANY Readers"'
@@ -117,5 +117,16 @@ Profiles:
         - *id005
         - *id006
         - *id007
+    Policies: *id008
+    Capabilities: *id003
+  common:
+    Consortium: TheConsortium
+    Application:
+      Organizations:
+      - *id005
+      - *id006
+      - *id007
+      Policies: *id009
+      Capabilities: *id001
     Policies: *id008
     Capabilities: *id003

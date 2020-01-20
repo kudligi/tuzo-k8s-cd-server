@@ -176,14 +176,23 @@ Profiles = {
     }
 }
 
-Channel_profile_template = {
+common = {
     "Consortium": "TheConsortium",
-    "Application": Application,
+    "Application": {}
 }
+
+for k in Application:
+    common["Application"][k] = Application[k]
+
+common["Application"]["Organizations"] = Organizations[1:]
+
+common.update(Channel)
 
 
 
 Profiles["OrdererGenesis"].update(Channel)
+
+Profiles["common"] = common
 
 
 configtx_dict = {
