@@ -1,0 +1,46 @@
+{
+  "LeadOrganization": {
+    "name": "LeadMerchant",
+    "domain": "lead.merchants"
+  },
+  "OtherOrganizations": [
+    {
+      "name": "Merchant1",
+      "domain": "redeem.merhcants"
+    },
+    {
+      "name": "Merchant2",
+      "domain": "issue.merhcants"
+    },
+    {
+      "name": "Merchant3",
+      "domain": "issueandredeem.merhcants"
+    }
+  ],
+  
+  "Channels": [
+    {
+      "name": "common",
+      "orgs": [
+        "Merchant1",
+        "Merchant2",
+        "Merchant3",
+        "LeadMerchant"
+      ]
+    }
+  ],
+  "SmartContracts": [
+    {
+      "cc": "tuco-cc",
+      "channel": "common"
+    },
+    {
+      "cc": "even-simpler",
+      "channel": "common"
+    },
+    {
+      "cc": "very-simple",
+      "channel": "common"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+OrderOrgs:
+- Name: OrdererAuthority
+  Domain: ordererauthority.organizations
+  Specs:
+    Hostname: orderer0
+PeerOrgs:
+- Name: Merchant1
+  Domain: redeem.merhcants
+  EnableNodeUs: true
+  Template: &id001
+    Count: 1
+  Users: &id002
+    Count: 1
+- Name: Merchant2
+  Domain: issue.merhcants
+  EnableNodeUs: true
+  Template: *id001
+  Users: *id002
+- Name: Merchant3
+  Domain: issueandredeem.merhcants
+  EnableNodeUs: true
+  Template: *id001
+  Users: *id002

@@ -1,0 +1,121 @@
+Organizations:
+- Name: OrdererAuthorityMSP
+  ID: OrdererAuthorityMSP
+  MSPDir: crypto-config/ordererOrganizations/ordererauthority.organizations/msp
+  Policies:
+    Readers:
+      Type: Signature
+      Rule: "OR('OrdererAuthorityMSP.member')"
+    Writers:
+      Type: Signature
+      Rule: "OR('OrdererAuthorityMSP.member')"
+    Admins:
+      Type: Signature
+      Rule: "OR('OrdererAuthorityMSP.admin')"
+- &id005
+  Name: Merchant1MSP
+  ID: Merchant1MSP
+  Policies:
+    Readers:
+      Type: Signature
+      Rule: "OR('Merchant1MSP.member')"
+    Writers:
+      Type: Signature
+      Rule: "OR('Merchant1MSP.member')"
+    Admins:
+      Type: Signature
+      Rule: "OR('Merchant1MSP.admin')"
+- &id006
+  Name: Merchant2MSP
+  ID: Merchant2MSP
+  Policies:
+    Readers:
+      Type: Signature
+      Rule: "OR('Merchant2MSP.member')"
+    Writers:
+      Type: Signature
+      Rule: "OR('Merchant2MSP.member')"
+    Admins:
+      Type: Signature
+      Rule: "OR('Merchant2MSP.admin')"
+- &id007
+  Name: Merchant3MSP
+  ID: Merchant3MSP
+  Policies:
+    Readers:
+      Type: Signature
+      Rule: "OR('Merchant3MSP.member')"
+    Writers:
+      Type: Signature
+      Rule: "OR('Merchant3MSP.member')"
+    Admins:
+      Type: Signature
+      Rule: "OR('Merchant3MSP.admin')"
+Capabilities:
+  Channel: &id003
+    v1_4_2: true
+  Orderer: &id002
+    v1_4_2: true
+  Application: &id001
+    v1_4_2: true
+Application:
+  Organizations: 
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: '"ANY Readers"'
+    Writers:
+      Type: ImplicitMeta
+      Rule: '"ANY Writers"'
+    Admins:
+      Type: ImplicitMeta
+      Rule: '"MAJORITY Admins"'
+  Capabilities: *id001
+Orderer: &id004
+  OrdererType: solo
+  Addresses:
+  - hlf-orderer--ordererauthority--orderer0:7050
+  BatchTimeout: 1s
+  BatchSize:
+    MaxMessageCount: 5
+    AbsoluteMaxBytes: 98 MB
+    PreferredMaxBytes: 1024 KB
+  Organizations: 
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: '"ANY Readers"'
+    Writers:
+      Type: ImplicitMeta
+      Rule: '"ANY Writers"'
+    Admins:
+      Type: ImplicitMeta
+      Rule: '"MAJORITY Admins"'
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: '"ANY Writers"'
+  Capabilities: *id002
+Channel:
+  Policies: &id008
+    Readers:
+      Type: ImplicitMeta
+      Rule: '"ANY Readers"'
+    Writers:
+      Type: ImplicitMeta
+      Rule: '"ANY Writers"'
+    Admins:
+      Type: ImplicitMeta
+      Rule: '"MAJORITY Admins"'
+  Capabilities: *id003
+Profiles:
+  OrdererGenesis:
+    Orderer:
+      Organizations: *id004
+    Consortiums:
+      TheConsortium:
+        Organizations:
+        - *id005
+        - *id006
+        - *id007
+    Policies: *id008
+    Capabilities: *id003
