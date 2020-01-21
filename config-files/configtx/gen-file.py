@@ -47,15 +47,15 @@ PeerOrgTemplate = {
     "Policies":{
         "Readers" :{
             "Type": "Signature",
-            "Rule": '"OR(\'MSP.member\')"'
+            "Rule": '\"OR(\'MSP.admin\', \'MSP.peer\', \'MSP.client\')\"'
         },
         "Writers": {
             "Type": "Signature",
-            "Rule": '"OR(\'MSP.member\')"'
+            "Rule": '\"OR(\'MSP.admin\', \'MSP.client\')\"'
         },
         "Admins": {
             "Type": "Signature",
-            "Rule": '"OR(\'MSP.admin\')"'
+            "Rule": '\"OR(\'MSP.admin\')\"'
         
         }
     },
@@ -67,13 +67,26 @@ PeerOrgTemplate = {
     ]
 }
 
+peerOrg = net_configuration["LeadOrganization"]
+d = dict()
+d["Name"] =  peerOrg["name"] + 'MSP'
+d["ID"] = peerOrg["name"] + 'MSP'
+d["MSPDir"] = "crypto-config/peerOrganizations/" + peerOrg["domain"] + "/msp"
+d["Policies"] = copy.deepcopy(PeerOrgTemplate['Policies'])
+d["Policies"]["Readers"]["Rule"] = '\"OR(\'MSP.admin\', \'MSP.peer\', \'MSP.client\')\"'.replace('MSP', peerOrg["name"]+'MSP')
+d["Policies"]["Writers"]["Rule"] = '\"OR(\'MSP.admin\', \'MSP.client\')\"'.replace('MSP', peerOrg["name"]+'MSP')
+d["Policies"]["Admins"]["Rule"] = '\"OR(\'MSP.admin\')\"'.replace('MSP', peerOrg["name"]+'MSP')
+Organizations.append(d.copy())
+
+
 for peerOrg in net_configuration["OtherOrganizations"]:
     d = dict()
     d["Name"] =  peerOrg["name"] + 'MSP'
     d["ID"] = peerOrg["name"] + 'MSP'
+    d["MSPDir"] = "crypto-config/peerOrganizations/" + peerOrg["domain"] + "/msp"
     d["Policies"] = copy.deepcopy(PeerOrgTemplate['Policies'])
-    d["Policies"]["Readers"]["Rule"] = '\"OR(\'MSP.member\')\"'.replace('MSP', peerOrg["name"]+'MSP')
-    d["Policies"]["Writers"]["Rule"] = '\"OR(\'MSP.member\')\"'.replace('MSP', peerOrg["name"]+'MSP')
+    d["Policies"]["Readers"]["Rule"] = '"OR(\'MSP.admin\', \'MSP.peer\', \'MSP.client\')"'.replace('MSP', peerOrg["name"]+'MSP')
+    d["Policies"]["Writers"]["Rule"] = '"OR(\'MSP.admin\', \'MSP.client\')"'.replace('MSP', peerOrg["name"]+'MSP')
     d["Policies"]["Admins"]["Rule"] = '\"OR(\'MSP.admin\')\"'.replace('MSP', peerOrg["name"]+'MSP')
     
     # peer.append(dict(PeerOrgTemplate))
@@ -88,9 +101,9 @@ for peerOrg in net_configuration["OtherOrganizations"]:
 
 
 Capabilities = {
-    "Channel" : {'v1_4_2':True},
-    "Orderer" : {'v1_4_2':True},
-    "Application" : {'v1_4_2':True}
+    "Channel" : {'V1_4_2':True},
+    "Orderer" : {'V1_4_2':True},
+    "Application" : {'V1_4_2':True}
 }
 
 Application = {
@@ -98,15 +111,15 @@ Application = {
     "Policies": {
         "Readers":{
             "Type": "ImplicitMeta",
-            "Rule": '\"ANY Readers\"'
+            "Rule": "\"ANY Readers\""
         },
         "Writers":{
             "Type": "ImplicitMeta",
-            "Rule": '\"ANY Writers\"'
+            "Rule": "\"ANY Writers\""
         },
         "Admins":{
             "Type": "ImplicitMeta",
-            "Rule": '\"MAJORITY Admins\"'
+            "Rule": "\"MAJORITY Admins\""
         }
     },
     "Capabilities": Capabilities["Application"]
@@ -165,9 +178,7 @@ Peers = copy.deepcopy(Organizations[1:])
 
 Profiles = {
     "OrdererGenesis": {
-        "Orderer"   : {
-            "Organizations": Orderer
-        },
+        "Orderer"   : {} ,
         "Consortiums": {
             "TheConsortium" : {
                 "Organizations": Organizations[1:]
@@ -175,6 +186,10 @@ Profiles = {
         }
     }
 }
+
+Profiles["OrdererGenesis"]["Orderer"].update(Orderer)
+Profiles["OrdererGenesis"]["Orderer"]["Organizations"] = [Organizations[0]]
+
 
 common = {
     "Consortium": "TheConsortium",
@@ -213,6 +228,9 @@ FileName = 'temp.yaml'
 with open(FileName) as f:
     newText=f.read().replace('\\\"', '')
     newText=newText.replace('REMOVE_THIS_LINE', '')
+    newText=newText.replace('\'\"', '\"')
+    newText=newText.replace('\"\'', '\"')
+
 
 with open(FileName, "w") as f:
     f.write(newText)

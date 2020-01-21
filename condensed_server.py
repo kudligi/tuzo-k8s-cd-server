@@ -72,7 +72,7 @@ def prep_cluster_step3():
 @app.route('/start_network1', methods=['GET'])
 def start_network1():
     old = os.getcwd()
-    os.chdir("../PIVT2/PIVT/fabric-kube")
+    os.chdir("../PIVT3/PIVT/fabric-kube")
     res = os.system("./init.sh ./samples/simple/ ./samples/chaincode/")
     res = os.system("helm install ./hlf-kube --name hlf-kube -f samples/simple/network.yaml -f samples/simple/crypto-config.yaml")
 
@@ -82,7 +82,7 @@ def start_network1():
 @app.route('/start_network2', methods=['GET'])
 def start_network2():
     old = os.getcwd()
-    os.chdir("../PIVT2/PIVT/fabric-kube")
+    os.chdir("../PIVT3/PIVT/fabric-kube")
     res = os.system("helm template channel-flow/ -f samples/simple/network.yaml -f samples/simple/crypto-config.yaml | argo submit - --watch")
     res = os.system("helm template chaincode-flow/ -f samples/simple/network.yaml -f samples/simple/crypto-config.yaml | argo submit - --watch")
 

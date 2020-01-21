@@ -13,9 +13,9 @@ def read_json(filename):
 OrderOrgs = {
     "Name":"OrdererAuthority",
     "Domain":"ordererauthority.organizations",
-    "Specs":{
+    "Specs":[{
         "Hostname": "orderer0"
-        }
+    }]
     }
 
 PeerOrgTemplate = {
@@ -35,9 +35,16 @@ net_configuration = read_json('../net.json')
 pp.pprint(net_configuration)
 
 crypto_config_dict = {
-    "OrderOrgs":[OrderOrgs],
+    "OrdererOrgs":[OrderOrgs],
     "PeerOrgs":[]
 } 
+
+
+peer = PeerOrgTemplate.copy()
+peer["Name"] = net_configuration["LeadOrganization"]["name"]
+peer["Domain"] = net_configuration["LeadOrganization"]["domain"]
+crypto_config_dict["PeerOrgs"].append(peer)
+
 
 for peerOrg in net_configuration["OtherOrganizations"]:
     peer = PeerOrgTemplate.copy()

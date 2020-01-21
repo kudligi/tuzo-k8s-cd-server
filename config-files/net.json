@@ -1,20 +1,20 @@
 {
   "LeadOrganization": {
     "name": "LeadMerchant",
-    "domain": "lead.merchants"
+    "domain": "org.lead.merchant"
   },
   "OtherOrganizations": [
     {
       "name": "Merchant1",
-      "domain": "redeem.merhcants"
+      "domain": "org.redeem.merchant.one"
     },
     {
       "name": "Merchant2",
-      "domain": "issue.merhcants"
+      "domain": "org.issue.merchant.two"
     },
     {
       "name": "Merchant3",
-      "domain": "issueandredeem.merhcants"
+      "domain": "org.issueandredeem.merchant.three"
     }
   ],
   
@@ -31,15 +31,11 @@
   ],
   "SmartContracts": [
     {
-      "cc": "tuco-cc",
-      "channel": "common"
-    },
-    {
-      "cc": "even-simpler",
-      "channel": "common"
-    },
-    {
       "cc": "very-simple",
+      "channel": "common"
+    },
+    {
+      "cc": "tuzo-cc",
       "channel": "common"
     }
   ]
