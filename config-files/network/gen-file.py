@@ -39,7 +39,7 @@ for chaincode in net_configuration["SmartContracts"]:
     print(policy)
     chaincodes.append({
         "name": chaincode["cc"],
-        "version": "REMOVE_THIS_LINE",
+        "version": '# "2.0"',
         "orgs": copy.deepcopy(channel_dict[chaincode["channel"]]),
         "channels": [{
             "name" : "common",
@@ -51,7 +51,7 @@ for chaincode in net_configuration["SmartContracts"]:
 network = {
     "network" : {
         "genesisProfile": "OrdererGenesis",
-        "systemChannel" : "testchainid",
+        "systemChannelID" : "testchainid",
         "channels": channels,
         "chaincodes": chaincodes
     }
@@ -65,6 +65,8 @@ yaml.dump(network, open(FileName, 'w'))
 with open(FileName) as f:
     newText=f.read().replace('\\\"', '')
     newText=newText.replace('REMOVE_THIS_LINE', '')
+    newText=newText.replace('\"\'', '\"')
+    newText=newText.replace('\'#', '#')
 
 with open(FileName, "w") as f:
     f.write(newText)

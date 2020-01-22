@@ -1,159 +1,171 @@
 Organizations:
-- &id006
-  Name: OrdererAuthorityMSP
-  ID: OrdererAuthorityMSP
-  MSPDir: crypto-config/ordererOrganizations/ordererauthority.organizations/msp
-  Policies:
-    Readers:
-      Type: Signature
-      Rule: "OR('OrdererAuthorityMSP.member')"
-    Writers:
-      Type: Signature
-      Rule: "OR('OrdererAuthorityMSP.member')"
-    Admins:
-      Type: Signature
-      Rule: "OR('OrdererAuthorityMSP.admin')"
-- &id008
-  Name: LeadMerchantMSP
-  ID: LeadMerchantMSP
-  MSPDir: crypto-config/peerOrganizations/org.lead.merchant/msp
-  Policies:
-    Readers:
-      Type: Signature
-      Rule: "OR('LeadMerchantMSP.admin', 'LeadMerchantMSP.peer', 'LeadMerchantMSP.client')"
-    Writers:
-      Type: Signature
-      Rule: "OR('LeadMerchantMSP.admin', 'LeadMerchantMSP.client')"
-    Admins:
-      Type: Signature
-      Rule: "OR('LeadMerchantMSP.admin')"
-- &id009
-  Name: Merchant1MSP
-  ID: Merchant1MSP
-  MSPDir: crypto-config/peerOrganizations/org.redeem.merchant.one/msp
-  Policies:
-    Readers:
-      Type: Signature
-      Rule: "OR('Merchant1MSP.admin', 'Merchant1MSP.peer', 'Merchant1MSP.client')"
-    Writers:
-      Type: Signature
-      Rule: "OR('Merchant1MSP.admin', 'Merchant1MSP.client')"
-    Admins:
-      Type: Signature
-      Rule: "OR('Merchant1MSP.admin')"
-- &id010
-  Name: Merchant2MSP
-  ID: Merchant2MSP
-  MSPDir: crypto-config/peerOrganizations/org.issue.merchant.two/msp
-  Policies:
-    Readers:
-      Type: Signature
-      Rule: "OR('Merchant2MSP.admin', 'Merchant2MSP.peer', 'Merchant2MSP.client')"
-    Writers:
-      Type: Signature
-      Rule: "OR('Merchant2MSP.admin', 'Merchant2MSP.client')"
-    Admins:
-      Type: Signature
-      Rule: "OR('Merchant2MSP.admin')"
-- &id011
-  Name: Merchant3MSP
-  ID: Merchant3MSP
-  MSPDir: crypto-config/peerOrganizations/org.issueandredeem.merchant.three/msp
-  Policies:
-    Readers:
-      Type: Signature
-      Rule: "OR('Merchant3MSP.admin', 'Merchant3MSP.peer', 'Merchant3MSP.client')"
-    Writers:
-      Type: Signature
-      Rule: "OR('Merchant3MSP.admin', 'Merchant3MSP.client')"
-    Admins:
-      Type: Signature
-      Rule: "OR('Merchant3MSP.admin')"
+    - &id006
+      Name: OrdererAuthorityMSP
+      ID: OrdererAuthorityMSP
+      MSPDir: crypto-config/ordererOrganizations/ordererauthority.organizations/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('OrdererAuthorityMSP.member')"
+          Writers:
+              Type: Signature
+              Rule: "OR('OrdererAuthorityMSP.member')"
+          Admins:
+              Type: Signature
+              Rule: "OR('OrdererAuthorityMSP.admin')"
+    - &id008
+      Name: LeadMerchantMSP
+      ID: LeadMerchantMSP
+      MSPDir: crypto-config/peerOrganizations/org.lead.merchant/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('LeadMerchantMSP.admin', 'LeadMerchantMSP.peer', 'LeadMerchantMSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('LeadMerchantMSP.admin', 'LeadMerchantMSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('LeadMerchantMSP.admin')"
+      AnchorPeers:
+          - Host: hlf-peer--leadmerchant--peer0
+            Port: 7051
+    - &id009
+      Name: Merchant1MSP
+      ID: Merchant1MSP
+      MSPDir: crypto-config/peerOrganizations/org.redeem.merchant.one/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Merchant1MSP.admin', 'Merchant1MSP.peer', 'Merchant1MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Merchant1MSP.admin', 'Merchant1MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Merchant1MSP.admin')"
+      AnchorPeers:
+          - Host: hlf-peer--merchant1--peer0
+            Port: 7051
+    - &id010
+      Name: Merchant2MSP
+      ID: Merchant2MSP
+      MSPDir: crypto-config/peerOrganizations/org.issue.merchant.two/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Merchant2MSP.admin', 'Merchant2MSP.peer', 'Merchant2MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Merchant2MSP.admin', 'Merchant2MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Merchant2MSP.admin')"
+      AnchorPeers:
+          - Host: hlf-peer--merchant2--peer0
+            Port: 7051
+    - &id011
+      Name: Merchant3MSP
+      ID: Merchant3MSP
+      MSPDir: crypto-config/peerOrganizations/org.issueandredeem.merchant.three/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Merchant3MSP.admin', 'Merchant3MSP.peer', 'Merchant3MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Merchant3MSP.admin', 'Merchant3MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Merchant3MSP.admin')"
+      AnchorPeers:
+          - Host: hlf-peer--merchant3--peer0
+            Port: 7051
 Capabilities:
-  Channel: &id003
-    V1_4_2: true
-  Orderer: &id002
-    V1_4_2: true
-  Application: &id001
-    V1_4_2: true
+    Channel: &id003
+        V1_4_2: true
+    Orderer: &id002
+        V1_4_2: true
+    Application: &id001
+        V1_4_2: true
 Application:
-  Organizations: 
-  Policies: &id013
-    Readers:
-      Type: ImplicitMeta
-      Rule: "ANY Readers"
-    Writers:
-      Type: ImplicitMeta
-      Rule: "ANY Writers"
-    Admins:
-      Type: ImplicitMeta
-      Rule: "MAJORITY Admins"
-  Capabilities: *id001
+    Organizations: 
+    Policies: &id013
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities: *id001
 Orderer:
-  OrdererType: solo
-  Addresses: &id004
-  - hlf-orderer--ordererauthority--orderer0:7050
-  BatchTimeout: 1s
-  BatchSize: &id005
-    MaxMessageCount: 5
-    AbsoluteMaxBytes: 98 MB
-    PreferredMaxBytes: 1024 KB
-  Organizations: 
-  Policies: &id007
-    Readers:
-      Type: ImplicitMeta
-      Rule: "ANY Readers"
-    Writers:
-      Type: ImplicitMeta
-      Rule: "ANY Writers"
-    Admins:
-      Type: ImplicitMeta
-      Rule: "MAJORITY Admins"
-    BlockValidation:
-      Type: ImplicitMeta
-      Rule: "ANY Writers"
-  Capabilities: *id002
+    OrdererType: solo
+    Addresses: &id004
+        - hlf-orderer--ordererauthority--orderer0:7050
+    BatchTimeout: 1s
+    BatchSize: &id005
+        MaxMessageCount: 5
+        AbsoluteMaxBytes: 98 MB
+        PreferredMaxBytes: 1024 KB
+    Organizations: 
+    Policies: &id007
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+    Capabilities: *id002
 Channel:
-  Policies: &id012
-    Readers:
-      Type: ImplicitMeta
-      Rule: "ANY Readers"
-    Writers:
-      Type: ImplicitMeta
-      Rule: "ANY Writers"
-    Admins:
-      Type: ImplicitMeta
-      Rule: "MAJORITY Admins"
-  Capabilities: *id003
+    Policies: &id012
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities: *id003
 Profiles:
-  OrdererGenesis:
-    Orderer:
-      OrdererType: solo
-      Addresses: *id004
-      BatchTimeout: 1s
-      BatchSize: *id005
-      Organizations:
-      - *id006
-      Policies: *id007
-      Capabilities: *id002
-    Consortiums:
-      TheConsortium:
-        Organizations:
-        - *id008
-        - *id009
-        - *id010
-        - *id011
-    Policies: *id012
-    Capabilities: *id003
-  common:
-    Consortium: TheConsortium
-    Application:
-      Organizations:
-      - *id008
-      - *id009
-      - *id010
-      - *id011
-      Policies: *id013
-      Capabilities: *id001
-    Policies: *id012
-    Capabilities: *id003
+    OrdererGenesis:
+        Orderer:
+            OrdererType: solo
+            Addresses: *id004
+            BatchTimeout: 1s
+            BatchSize: *id005
+            Organizations:
+                - *id006
+            Policies: *id007
+            Capabilities: *id002
+        Consortiums:
+            TheConsortium:
+                Organizations:
+                    - *id008
+                    - *id009
+                    - *id010
+                    - *id011
+        Policies: *id012
+        Capabilities: *id003
+    common:
+        Consortium: TheConsortium
+        Application:
+            Organizations:
+                - *id008
+                - *id009
+                - *id010
+                - *id011
+            Policies: *id013
+            Capabilities: *id001
+        Policies: *id012
+        Capabilities: *id003

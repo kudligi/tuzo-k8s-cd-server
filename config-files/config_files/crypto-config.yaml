@@ -1,28 +1,34 @@
 OrdererOrgs:
-- Name: OrdererAuthority
-  Domain: ordererauthority.organizations
-  Specs:
-  - Hostname: orderer0
+  - Name: OrdererAuthority
+    Domain: ordererauthority.organizations
+    Specs:
+      - Hostname: orderer0
 PeerOrgs:
-- Name: LeadMerchant
-  Domain: org.lead.merchant
-  EnableNodeUs: true
-  Template: &id001
-    Count: 1
-  Users: &id002
-    Count: 1
-- Name: Merchant1
-  Domain: org.redeem.merchant.one
-  EnableNodeUs: true
-  Template: *id001
-  Users: *id002
-- Name: Merchant2
-  Domain: org.issue.merchant.two
-  EnableNodeUs: true
-  Template: *id001
-  Users: *id002
-- Name: Merchant3
-  Domain: org.issueandredeem.merchant.three
-  EnableNodeUs: true
-  Template: *id001
-  Users: *id002
+  - Name: LeadMerchant
+    Domain: org.lead.merchant
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Merchant1
+    Domain: org.redeem.merchant.one
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Merchant2
+    Domain: org.issue.merchant.two
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Merchant3
+    Domain: org.issueandredeem.merchant.three
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1

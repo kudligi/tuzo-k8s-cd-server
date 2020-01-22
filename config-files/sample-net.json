@@ -1,0 +1,33 @@
+{
+  "LeadOrganization": {
+    "name": "Karga",
+    "domain": "aptalkarga.tr"
+  },
+  "OtherOrganizations": [
+    {
+      "name": "Nevergreen",
+      "domain": "nevergreen.nl"
+    },
+    {
+      "name": "Atlantis",
+      "domain": "atlantis.com"
+    }
+  ],
+  
+  "Channels": [
+    {
+      "name": "common",
+      "orgs": [
+        "Karga",
+        "Nevergreen",
+        "Atlantis"
+      ]
+    }
+  ],
+  "SmartContracts": [
+    {
+      "cc": "very-simple",
+      "channel": "common"
+    }
+  ]
+}

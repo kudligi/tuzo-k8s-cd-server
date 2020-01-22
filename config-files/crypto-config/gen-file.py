@@ -4,6 +4,9 @@ from ruamel.yaml import YAML
 yaml = YAML()
 import sys
 pp = pprint.PrettyPrinter(indent=4)
+yaml.indent(mapping=2, sequence=4, offset=2)
+import copy
+
 
 def read_json(filename):
     with open(filename) as f:
@@ -21,7 +24,7 @@ OrderOrgs = {
 PeerOrgTemplate = {
     "Name": "",
     "Domain": "",
-    "EnableNodeUs": True,
+    "EnableNodeOUs": True,
     "Template": {
         "Count" : 1
     },
@@ -40,14 +43,14 @@ crypto_config_dict = {
 } 
 
 
-peer = PeerOrgTemplate.copy()
+peer = copy.deepcopy(PeerOrgTemplate)
 peer["Name"] = net_configuration["LeadOrganization"]["name"]
 peer["Domain"] = net_configuration["LeadOrganization"]["domain"]
 crypto_config_dict["PeerOrgs"].append(peer)
 
 
 for peerOrg in net_configuration["OtherOrganizations"]:
-    peer = PeerOrgTemplate.copy()
+    peer = copy.deepcopy(PeerOrgTemplate)
     peer["Name"] = peerOrg["name"]
     peer["Domain"] = peerOrg["domain"]
     crypto_config_dict["PeerOrgs"].append(peer)

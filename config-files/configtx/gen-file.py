@@ -4,6 +4,8 @@ from ruamel.yaml import YAML
 yaml = YAML()
 import sys
 pp = pprint.PrettyPrinter(indent=4)
+yaml.indent(mapping=4, sequence=6, offset=4)
+#yaml.compact(seq_seq=False, seq_map=False)
 import copy
 
 def read_json(filename):
@@ -76,6 +78,12 @@ d["Policies"] = copy.deepcopy(PeerOrgTemplate['Policies'])
 d["Policies"]["Readers"]["Rule"] = '\"OR(\'MSP.admin\', \'MSP.peer\', \'MSP.client\')\"'.replace('MSP', peerOrg["name"]+'MSP')
 d["Policies"]["Writers"]["Rule"] = '\"OR(\'MSP.admin\', \'MSP.client\')\"'.replace('MSP', peerOrg["name"]+'MSP')
 d["Policies"]["Admins"]["Rule"] = '\"OR(\'MSP.admin\')\"'.replace('MSP', peerOrg["name"]+'MSP')
+d["AnchorPeers"] = [
+    {
+        "Host": "hlf-peer--ORGNAME--peer0".replace('ORGNAME', peerOrg["name"].lower()),
+        "Port": 7051
+    }
+]
 Organizations.append(d.copy())
 
 
@@ -88,7 +96,12 @@ for peerOrg in net_configuration["OtherOrganizations"]:
     d["Policies"]["Readers"]["Rule"] = '"OR(\'MSP.admin\', \'MSP.peer\', \'MSP.client\')"'.replace('MSP', peerOrg["name"]+'MSP')
     d["Policies"]["Writers"]["Rule"] = '"OR(\'MSP.admin\', \'MSP.client\')"'.replace('MSP', peerOrg["name"]+'MSP')
     d["Policies"]["Admins"]["Rule"] = '\"OR(\'MSP.admin\')\"'.replace('MSP', peerOrg["name"]+'MSP')
-    
+    d["AnchorPeers"] = [
+    {
+        "Host": "hlf-peer--ORGNAME--peer0".replace('ORGNAME', peerOrg["name"].lower()),
+        "Port": 7051
+    }
+    ]
     # peer.append(dict(PeerOrgTemplate))
     # peer[i]["Name"]: peerOrg["name"]
     # peer[i]["ID"]: peerOrg["name"]
