@@ -1,4 +1,11 @@
 import os
+import sys
+
+filename = sys.argv[1]
+os.system('rm net.json')
+os.system('cp generated_network_config/' + filename+ ' ./net.json')
+
+
 
 os.chdir('./crypto-config')
 os.system('python gen-file.py')

@@ -1,0 +1,45 @@
+{
+  "network_config" : {
+  "LeadOrganization": {
+    "name": "LeadMerchant",
+    "domain": "org.lead.merchant" 
+  },
+  "OtherOrganizations": [
+    {
+      "name": "Merchant1",
+      "domain": "org.redeem.merchant.one"
+    },
+    {
+      "name": "Merchant2",
+      "domain": "org.issue.merchant.two"
+    },
+    {
+      "name": "Merchant3",
+      "domain": "org.issueandredeem.merchant.three"
+    }
+  ],
+  
+  "Channels": [
+    {
+      "name": "common",
+      "orgs": [
+        "Merchant1",
+        "Merchant2",
+        "Merchant3",
+        "LeadMerchant"
+      ]
+    }
+  ],
+  "SmartContracts": [
+    {
+      "cc": "very-simple",
+      "channel": "common"
+    },
+    {
+      "cc": "tuzo-cc",
+      "channel": "common"
+    }
+  ]
+},
+"filename" : "temp.yaml"
+}

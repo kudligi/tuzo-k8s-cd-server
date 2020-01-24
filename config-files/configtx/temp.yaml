@@ -81,6 +81,23 @@ Organizations:
       AnchorPeers:
           - Host: hlf-peer--merchant3--peer0
             Port: 7051
+    - &id012
+      Name: Merchant5MSP
+      ID: Merchant5MSP
+      MSPDir: crypto-config/peerOrganizations/mydomain.five/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Merchant5MSP.admin', 'Merchant5MSP.peer', 'Merchant5MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Merchant5MSP.admin', 'Merchant5MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Merchant5MSP.admin')"
+      AnchorPeers:
+          - Host: hlf-peer--merchant5--peer0
+            Port: 7051
 Capabilities:
     Channel: &id003
         V1_4_2: true
@@ -90,7 +107,7 @@ Capabilities:
         V1_4_2: true
 Application:
     Organizations: 
-    Policies: &id013
+    Policies: &id014
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
@@ -126,7 +143,7 @@ Orderer:
             Rule: "ANY Writers"
     Capabilities: *id002
 Channel:
-    Policies: &id012
+    Policies: &id013
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
@@ -155,7 +172,8 @@ Profiles:
                     - *id009
                     - *id010
                     - *id011
-        Policies: *id012
+                    - *id012
+        Policies: *id013
         Capabilities: *id003
     common:
         Consortium: TheConsortium
@@ -165,7 +183,8 @@ Profiles:
                 - *id009
                 - *id010
                 - *id011
-            Policies: *id013
+                - *id012
+            Policies: *id014
             Capabilities: *id001
-        Policies: *id012
+        Policies: *id013
         Capabilities: *id003
