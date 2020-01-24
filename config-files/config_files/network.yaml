@@ -3,19 +3,19 @@ network:
   systemChannelID: testchainid
   channels:
     - name: common
-      orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant, Merchant5]
+      orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant]
   chaincodes:
     - name: very-simple
       version: # "2.0"
-      orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant, Merchant5]
+      orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant]
       channels:
         - name: common
-          orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant, Merchant5]
-          policy: OR('Merchant1MSP.member', 'Merchant2MSP.member', 'Merchant3MSP.member', 'LeadMerchantMSP.member', 'Merchant5MSP.member')
+          orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant]
+          policy: OR('Merchant1MSP.member', 'Merchant2MSP.member', 'Merchant3MSP.member', 'LeadMerchantMSP.member')
     - name: tuzo-cc
       version: # "2.0"
-      orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant, Merchant5]
+      orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant]
       channels:
         - name: common
-          orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant, Merchant5]
-          policy: OR('Merchant1MSP.member', 'Merchant2MSP.member', 'Merchant3MSP.member', 'LeadMerchantMSP.member', 'Merchant5MSP.member')
+          orgs: [Merchant1, Merchant2, Merchant3, LeadMerchant]
+          policy: OR('Merchant1MSP.member', 'Merchant2MSP.member', 'Merchant3MSP.member', 'LeadMerchantMSP.member')

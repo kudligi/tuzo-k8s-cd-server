@@ -1,0 +1,103 @@
+name: upaayan-loyalty-LeadMerchant
+x-type: hlfv1
+description: Loyalty Points Network
+version: '1.0'
+channels:
+    common:
+        orderers:
+            - orderer0.ordererauthority.organizations
+    peers:
+        peer0.org.lead.merchant:
+            endorsingPeer: true
+            chaincodeQuery: true
+            ledgerQeury: true
+            eventSource: true
+        peer0.org.redeem.merchant.one:
+            endorsingPeer: true
+            chaincodeQuery: true
+            ledgerQeury: true
+            eventSource: true
+        peer0.org.issue.merchant.two:
+            endorsingPeer: true
+            chaincodeQuery: true
+            ledgerQeury: true
+            eventSource: true
+        peer0.org.issueandredeem.merchant.three:
+            endorsingPeer: true
+            chaincodeQuery: true
+            ledgerQeury: true
+            eventSource: true
+organizations:
+    LeadMerchant:
+        mspid: LeadMerchantMSP
+        peers:
+            - peer0.org.lead.merchant
+        certificateAuthorities:
+            - ca-LeadMerchant
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/keystore/KEY
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/signcerts/Admin@org.lead.merchant-cert.pem
+    Merchant1:
+        mspid: Merchant1MSP
+        peers:
+            - peer0.org.redeem.merchant.one
+        certificateAuthorities:
+            - ca-Merchant1
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/keystore/KEY
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/signcerts/Admin@org.redeem.merchant.one-cert.pem
+    Merchant2:
+        mspid: Merchant2MSP
+        peers:
+            - peer0.org.issue.merchant.two
+        certificateAuthorities:
+            - ca-Merchant2
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/keystore/KEY
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/signcerts/Admin@org.issue.merchant.two-cert.pem
+    Merchant3:
+        mspid: Merchant3MSP
+        peers:
+            - peer0.org.issueandredeem.merchant.three
+        certificateAuthorities:
+            - ca-Merchant3
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/keystore/KEY
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/signcerts/Admin@org.issueandredeem.merchant.three-cert.pem
+orderers:
+    orderer0.orderer.organizations:
+        url: grpc://hlf-orderer--ordererauthority--orderer0:7050
+        gprcOptions:
+            ssl-target-name-override: orderer0.ordererauthority.organizations
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/ordererOrganizations/ordererauthority.organizations/orderers/orderer0.ordererauthority.organizations/tls/ca.crt
+peers:
+    peer0.org.lead.merchant:
+        url: grpc://hlf-peer--LeadMerchant--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.DOMAIN
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/DOMAIN/orderers/peer0.DOMAIN/tls/ca.crt
+    peer0.org.redeem.merchant.one:
+        url: grpc://hlf-peer--merchant1--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.org.redeem.merchant.one
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/orderers/peer0.org.redeem.merchant.one/tls/ca.crt
+    peer0.org.issue.merchant.two:
+        url: grpc://hlf-peer--merchant2--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.org.issue.merchant.two
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/orderers/peer0.org.issue.merchant.two/tls/ca.crt
+    peer0.org.issueandredeem.merchant.three:
+        url: grpc://hlf-peer--merchant3--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.org.issueandredeem.merchant.three
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/orderers/peer0.org.issueandredeem.merchant.three/tls/ca.crt
+certificateAuthorities: {}

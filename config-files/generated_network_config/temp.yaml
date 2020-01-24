@@ -6,8 +6,7 @@
                 "Merchant1",
                 "Merchant2",
                 "Merchant3",
-                "LeadMerchant",
-                "Merchant5"
+                "LeadMerchant"
             ]
         }
     ],
@@ -27,10 +26,6 @@
         {
             "domain": "org.issueandredeem.merchant.three",
             "name": "Merchant3"
-        },
-        {
-            "domain": "mydomain.five",
-            "name": "Merchant5"
         }
     ],
     "SmartContracts": [
