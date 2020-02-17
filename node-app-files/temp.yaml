@@ -35,7 +35,7 @@ organizations:
         certificateAuthorities:
             - ca-LeadMerchant
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/keystore/KEY
+            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/keystore/de8c920fd02e747517c9d874c826d661c239d05c5aafaa1650e66739b995bfe5_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/signcerts/Admin@org.lead.merchant-cert.pem
     Merchant1:
@@ -45,7 +45,7 @@ organizations:
         certificateAuthorities:
             - ca-Merchant1
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/keystore/KEY
+            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/keystore/e0c7f7bb1e60ace8289023f3deac3465340e70ed3f722f359d757c25ba9a0d6b_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/signcerts/Admin@org.redeem.merchant.one-cert.pem
     Merchant2:
@@ -55,7 +55,7 @@ organizations:
         certificateAuthorities:
             - ca-Merchant2
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/keystore/KEY
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/keystore/4e13413954999b00cc67ead571993c3229bd86a69fa4256bb746c5ea3648bd03_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/signcerts/Admin@org.issue.merchant.two-cert.pem
     Merchant3:
@@ -65,7 +65,7 @@ organizations:
         certificateAuthorities:
             - ca-Merchant3
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/keystore/KEY
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/keystore/17b6a3d18c6782e585629eb0be8a5891d9bbf8ded6bb754095a11c65bed5af75_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/signcerts/Admin@org.issueandredeem.merchant.three-cert.pem
 orderers:
@@ -100,4 +100,44 @@ peers:
             ssl-target-name-override: peer0.org.issueandredeem.merchant.three
         tlsCACerts:
             path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/orderers/peer0.org.issueandredeem.merchant.three/tls/ca.crt
-certificateAuthorities: {}
+certificateAuthorities:
+    ca-LeadMerchant:
+        url: http://hlf-ca--leadmerchant:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/ca/ca.org.lead.merchant-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-LeadMerchant
+    ca-Merchant1:
+        url: http://hlf-ca--merchant1:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/ca/ca.org.redeem.merchant.one-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant1
+    ca-Merchant2:
+        url: http://hlf-ca--merchant2:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/ca/ca.org.issue.merchant.two-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant2
+    ca-Merchant3:
+        url: http://hlf-ca--merchant3:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/ca/ca.org.issueandredeem.merchant.three-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant3

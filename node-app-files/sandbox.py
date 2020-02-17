@@ -4,6 +4,7 @@ import json
 import pprint as pp
 import sys
 import copy 
+import os
 
 yaml.indent(mapping=4, sequence=6, offset=4)
 
@@ -51,12 +52,12 @@ p2 = {
 }
 
 ca1 = {
-    "url": "",
+    "url": "http://hlf-ca--orgname:7054",
     "httpOptions": {
         "verify" : "false"
     },
     "tlsCACerts" : {
-        "path" : ""
+        "path" : "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/ca/ca.DOMAIN-cert.pem"
     },
     "registrar" : [{
         "enrollId": "admin",
@@ -98,7 +99,7 @@ d["organizations"][org["name"]] = copy.deepcopy(org1)
 d["organizations"][org["name"]]["mspid"] = org["name"] + "MSP"
 d["organizations"][org["name"]]["peers"].append("peer0."+org["domain"] )
 d["organizations"][org["name"]]["certificateAuthorities"].append("ca-"+org["name"])
-d["organizations"][org["name"]]["adminPrivateKey"]["path"] = "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/users/Admin@DOMAIN/msp/keystore/KEY".replace("DOMAIN", org["domain"])
+d["organizations"][org["name"]]["adminPrivateKey"]["path"] = "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/users/Admin@DOMAIN/msp/keystore/KEY".replace("DOMAIN", org["domain"]).replace('KEY', org["domain"].upper() + ".KEY")
 d["organizations"][org["name"]]["signedCert"]["path"] = "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/users/Admin@DOMAIN/msp/signcerts/Admin@DOMAIN-cert.pem".replace("DOMAIN", org["domain"])
 
 
@@ -107,7 +108,7 @@ for org in net["OtherOrganizations"]:
     d["organizations"][org["name"]]["mspid"] = org["name"] + "MSP"
     d["organizations"][org["name"]]["peers"].append("peer0."+org["domain"] )
     d["organizations"][org["name"]]["certificateAuthorities"].append("ca-"+org["name"])
-    d["organizations"][org["name"]]["adminPrivateKey"]["path"] = "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/users/Admin@DOMAIN/msp/keystore/KEY".replace("DOMAIN", org["domain"])
+    d["organizations"][org["name"]]["adminPrivateKey"]["path"] = "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/users/Admin@DOMAIN/msp/keystore/KEY".replace("DOMAIN", org["domain"]).replace('KEY', org["domain"].upper() + ".KEY")
     d["organizations"][org["name"]]["signedCert"]["path"] = "artifacts/channel/crypto-config/peerOrganizations/DOMAIN/users/Admin@DOMAIN/msp/signcerts/Admin@DOMAIN-cert.pem".replace("DOMAIN", org["domain"])
 
 org = net["LeadOrganization"]
@@ -124,4 +125,26 @@ for org in net["OtherOrganizations"]:
     d["peers"]["peer0." + org["domain"]]["gprcOptions"]["ssl-target-name-override"] = d["peers"]["peer0." + org["domain"]]["gprcOptions"]["ssl-target-name-override"].replace('DOMAIN', org["domain"])
     d["peers"]["peer0." + org["domain"]]["tlsCACerts"]["path"] = d["peers"]["peer0." + org["domain"]]["tlsCACerts"]["path"].replace('DOMAIN', org["domain"])
 
-yaml.dump(d, open("./temp.yaml", 'w'))
+org = net["LeadOrganization"]
+d["certificateAuthorities"]["ca-" + org["name"]] = copy.deepcopy(ca1)
+d["certificateAuthorities"]["ca-" + org["name"]]["caName"] = ca1["caName"].replace("ORGNAME", org["name"])
+d["certificateAuthorities"]["ca-" + org["name"]]["url"] = ca1["url"].replace("orgname", org["name"].lower())
+d["certificateAuthorities"]["ca-" + org["name"]]["tlsCACerts"]["path"] = ca1["tlsCACerts"]["path"].replace("DOMAIN", org["domain"].lower())
+
+for org in net["OtherOrganizations"]:
+    d["certificateAuthorities"]["ca-" + org["name"]] = copy.deepcopy(ca1)
+    d["certificateAuthorities"]["ca-" + org["name"]]["caName"] = ca1["caName"].replace("ORGNAME", org["name"])
+    d["certificateAuthorities"]["ca-" + org["name"]]["url"] = ca1["url"].replace("orgname", org["name"].lower())
+    d["certificateAuthorities"]["ca-" + org["name"]]["tlsCACerts"]["path"] = ca1["tlsCACerts"]["path"].replace("DOMAIN", org["domain"].lower())
+
+FileName = "./temp.yaml"
+yaml.dump(d, open(FileName, 'w'))
+
+for peer in os.listdir('channel/crypto-config/peerOrganizations'):
+    sk = os.listdir('channel/crypto-config/peerOrganizations/' + peer + "/users/Admin@DOMAIN/msp/keystore".replace("DOMAIN", peer))
+    sk = sk[0]
+    with open(FileName) as f:
+        newText=f.read().replace(peer.upper() + '.KEY', sk)
+
+    with open(FileName, "w") as f:
+        f.write(newText)

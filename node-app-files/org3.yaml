@@ -1,0 +1,11 @@
+name: upaayan-loyalty-LeadMerchant
+x-type: hlfv1
+description: Loyalty Points Network
+version: '1.0'
+client:
+    organization: Merchant3
+    credentialStore:
+        path: fabric-client-kv-merchant3
+        cryptoStore:
+            path: /tmp/fabric-client-kv-merchant3
+        wallet: wallet-name

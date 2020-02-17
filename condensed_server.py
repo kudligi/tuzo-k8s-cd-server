@@ -171,52 +171,54 @@ def add_org_to_json():
 
 
 
-# @app.route('/deploy_node_app', methods=['GET'])
-# def deploy_node_app():
-#     try:
-#         os.system("kubectl create deployment hello-web --image=gcr.io/busy-burglar/hello-app:v1")
-#         proc = subprocess.Popen(["kubectl get pods | grep hello | awk {'print $1'}"], stdout=subprocess.PIPE, shell=True)
-#         (out, err) = proc.communicate()
-#         print(out)
+@app.route('/deploy_node_app', methods=['GET'])
+def deploy_node_app():
+    try:
+        os.system("kubectl create deployment hello-web --image=gcr.io/busy-burglar/hello-app:v1")
+        proc = subprocess.Popen(["kubectl get pods | grep hello | awk {'print $1'}"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        print(out)
 
     
-#     except:
-#         print("didnt finish something went wrong")
-#         return "didnt finish something went wrong"
+    except:
+        print("didnt finish something went wrong")
+        return "didnt finish something went wrong"
     
-#     return "node app deployed"
+    return "node app deployed"
 
 
-# @app.route('/migrate_connection_profile', methods=['GET'])
-# def migrate_connection_profile():
-#     try:
-#         os.system("cd ./node-app-files/ && ./create_network_config.sh")
-#         proc = subprocess.Popen(["kubectl get pods | grep hello | awk {'print $1'}"], stdout=subprocess.PIPE, shell=True)
-#         (pod_name, err) = proc.communicate()
-#         print(pod_name.decode("utf-8")[:-1])
-#         pod_name = pod_name.decode("utf-8")[:-1]
-#         print("kubectl cp network-config.yaml " + pod_name+":/home/nodejs/app/artifacts/")
-#         proc = subprocess.Popen(["kubectl cp node-app-files/network-config.yaml " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
-#         (out, err) = proc.communicate()
-#         print(out)
+@app.route('/migrate_connection_profile/<filename>', methods=['GET'])
+def migrate_connection_profile(filename):
+    try:
+        os.system("cd ./node-app-files/ && python generate-common-profile.py " + filename)
+        os.system("cd ./node-app-files/ && python generate-client-profiles.py " + filename)
         
-#         proc = subprocess.Popen(["kubectl cp node-app-files/org1.yaml " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
-#         (out, err) = proc.communicate()
-#         print(out)
+        proc = subprocess.Popen(["kubectl get pods | grep hello | awk {'print $1'}"], stdout=subprocess.PIPE, shell=True)
+        (pod_name, err) = proc.communicate()
+        print(pod_name.decode("utf-8")[:-1])
+        pod_name = pod_name.decode("utf-8")[:-1]
+        print("kubectl cp network-config.yaml " + pod_name+":/home/nodejs/app/artifacts/")
+        proc = subprocess.Popen(["kubectl cp node-app-files/network-config.yaml " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        print(out)
+        
+        proc = subprocess.Popen(["kubectl cp node-app-files/org1.yaml " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        print(out)
 
-#         proc = subprocess.Popen(["kubectl cp node-app-files/org2.yaml " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
-#         (out, err) = proc.communicate()
-#         print(out)
+        proc = subprocess.Popen(["kubectl cp node-app-files/org2.yaml " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        print(out)
 
-#         proc = subprocess.Popen(["kubectl cp node-app-files/channel/ " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
-#         (out, err) = proc.communicate()
-#         print(out)
+        proc = subprocess.Popen(["kubectl cp node-app-files/channel/ " + pod_name+":/home/nodejs/app/artifacts/"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        print(out)
     
-#     except Exception:
-#         print("didnt finish something went wrong, ", str(Exception))
-#         return "didnt finish something went wrong"
+    except Exception:
+        print("didnt finish something went wrong, ", str(Exception))
+        return "didnt finish something went wrong"
     
-#     return "connection profiles moved to node app"
+    return "connection profiles moved to node app"
 
 
 
