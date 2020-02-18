@@ -1,0 +1,16 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: client-app-trial-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: client-app-trial  
+    spec:     # pod spec                  
+      containers: 
+      - name: client-app-trial
+        image: gcr.io/busy-burglar/client-app-image-trial # image we pushed
+        ports:
+        - containerPort: 4000

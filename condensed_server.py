@@ -4,6 +4,9 @@ from flask import json, request
 from flask_cors import CORS
 import subprocess
 from subprocess import check_output as CO
+import time
+from flask import jsonify
+
 
 app = flask.Flask(__name__)
 CORS(app)
@@ -42,7 +45,7 @@ def connect_cli_to_cluster():
 @app.route('/create_and_connect_to_cluster', methods=['GET'])
 def ClusterInit():
     try:
-        os.system('gcloud beta container --project "busy-burglar" clusters create "test-k8-1" --zone "asia-southeast1-b" --no-enable-basic-auth --cluster-version "1.13.11-gke.14" --machine-type "n1-standard-1" --image-type "COS" --disk-type "pd-standard" --disk-size "100" --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --num-nodes "8" --enable-cloud-logging --enable-cloud-monitoring --enable-ip-alias --network "projects/busy-burglar/global/networks/default" --subnetwork "projects/busy-burglar/regions/asia-southeast1/subnetworks/default" --default-max-pods-per-node "110" --addons HorizontalPodAutoscaling,HttpLoadBalancing --enable-autoupgrade --enable-autorepair')
+        os.system('gcloud beta container --project "busy-burglar" clusters create "test-k8-1" --zone "asia-southeast1-b" --no-enable-basic-auth --cluster-version "1.14.10-gke.17" --machine-type "n1-standard-1" --image-type "COS" --disk-type "pd-standard" --disk-size "100" --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --num-nodes "8" --enable-stackdriver-kubernetes --enable-ip-alias --network "projects/busy-burglar/global/networks/default" --subnetwork "projects/busy-burglar/regions/asia-southeast1/subnetworks/default" --default-max-pods-per-node "110" --addons HorizontalPodAutoscaling,HttpLoadBalancing --enable-autoupgrade --enable-autorepair')
         os.system('gcloud container clusters get-credentials test-k8-1')
     except:
         print("something went wrong") 
@@ -64,6 +67,8 @@ def prep_cluster_step1():
 def prep_cluster_step2():
     res = os.system("kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=default:default")
     res = os.system("helm install stable/minio -n argo-artifacts  --set service.type=LoadBalancer   --set defaultBucket.enabled=true   --set defaultBucket.name=my-bucket   --set persistence.enabled=false   --set fullnameOverride=argo-artifacts")
+    time.sleep(5)
+    res = os.system("kubectl apply -f temp.yaml")
 
     return "done"
 
@@ -144,7 +149,7 @@ def set_net_json():
     os.chdir('./config-files/')
     os.system('python generate.py ' + net_json["filename"])
     os.chdir(old)
-    return "done"
+    return jsonify({"status":"done"})
 
 @app.route('/add_org_to_json', methods=['POST'])
 def add_org_to_json():
