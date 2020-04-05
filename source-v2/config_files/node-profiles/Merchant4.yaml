@@ -1,0 +1,11 @@
+name: upaayan-loyalty-platform
+x-type: hlfv1
+description: Loyalty Points Network
+version: '1.0'
+client:
+    organization: Merchant4
+    credentialStore:
+        path: fabric-client-kv-merchant4
+        cryptoStore:
+            path: /tmp/fabric-client-kv-merchant4
+        wallet: wallet-name

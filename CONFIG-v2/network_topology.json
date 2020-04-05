@@ -1,0 +1,68 @@
+{
+    "orgs": [
+        {
+            "name":"Merchant1",
+            "domain":"merchant1.merchant.com",
+            "nodes": 1} ,
+        {
+            "name":"Merchant2",
+            "domain":"merchant2.merchant.com",
+            "nodes": 1} , 
+        {
+            "name":"Merchant3",
+            "domain":"merchant3.merchant.com",
+            "nodes": 1} , 
+        {
+            "name":"Merchant4",
+            "domain":"merchant4.merchant.com",
+            "nodes": 1} , 
+        {
+            "name":"LeadMerchant",
+            "domain":"leadmerchant.merchant.com",
+            "nodes": 2} , 
+        {
+            "name":"tuzo",
+            "domain":"tuzo.platform.com",
+            "nodes": 1
+        }
+    ],
+    "channels":[
+    {
+        "name": "common",
+        "orgs": [
+            "Merchant1" ,
+            "Merchant2", 
+            "Merchant3", 
+            "Merchant4", 
+            "LeadMerchant", 
+            "tuzo"
+        ]         
+    },
+    {
+        "name": "private-1",
+        "orgs": [
+            "Merchant1", 
+            "LeadMerchant", 
+            "tuzo"
+        ]         
+    }   
+    ],
+    "contracts": [
+        {
+          "contract": "very-simple",
+          "channels": ["common", "private-1"]
+        }
+    ],
+    "orderers": [
+        {
+            "name" : "Orderer1",
+            "domain" : "orderer1.orderer.com",
+            "nodes" : 2
+        },
+        {
+            "name" : "Orderer2",
+            "domain" : "orderer2.orderer.com",
+            "nodes" : 1
+        }
+    ]
+}

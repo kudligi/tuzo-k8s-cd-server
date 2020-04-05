@@ -1,0 +1,15 @@
+helm install ./hlf-kube --name hlf-kube -f upayan-fabric/network.yaml -f upayan-fabric/crypto-config.yaml --set orderer.cluster.enabled=true --set peer.launchPods=false --set orderer.launchPods=false
+
+./collect_host_aliases.sh ./upayan-fabric/
+
+helm upgrade hlf-kube ./hlf-kube -f upayan-fabric/network.yaml -f upayan-fabric/crypto-config.yaml -f upayan-fabric/hostAliases.yaml --set orderer.cluster.enabled=true
+
+
+helm template channel-flow/ -f upayan-fabric/network.yaml -f upayan-fabric/crypto-config.yaml -f upayan-fabric/hostAliases.yaml | argo submit - --watch
+
+helm template chaincode-flow/ -f upayan-fabric/network.yaml -f upayan-fabric/crypto-config.yaml -f upayan-fabric/hostAliases.yaml | argo submit - --watch
+
+
+#create node sdk with mongo db from upayan access control
+
+kubectl create -f nodejs-service.yaml,nodejs-deployment.yaml,nodejs-env-configmap.yaml,db-service.yaml,db-deployment.yaml,dbdata-persistentvolumeclaim.yaml,secret.yaml

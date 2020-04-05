@@ -1,0 +1,29 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+ config: |
+   artifactRepository:
+     s3:
+       bucket: my-bucket
+       endpoint: argo-artifacts:9000
+       insecure: true
+       # accessKeySecret and secretKeySecret are secret selectors.
+       # It references the k8s secret named 'argo-artifacts'
+       # which was created during the minio helm install. The keys,
+       # 'accesskey' and 'secretkey', inside that secret are where the
+       # actual minio credentials are stored.
+       #CHANGES ARE WORKING
+       accessKeySecret:
+         name: argo-artifacts
+         key: accesskey
+       secretKeySecret:
+         name: argo-artifacts
+         key: secretkey
+kind: ConfigMap
+metadata:
+  name: workflow-controller-configmap
+  namespace: argo
+      

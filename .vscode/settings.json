@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/home/gangsta/anaconda3/envs/cybint/bin/python"
+    "python.pythonPath": "/home/gangsta/anaconda3/envs/cybint/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false,
+    "python.linting.prospectorEnabled": false
 }

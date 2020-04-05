@@ -1,0 +1,53 @@
+OrdererOrgs:
+  - Name: Orderer1
+    Domain: orderer1.orderer.com
+    Specs:
+      - Hostname: orderer0
+      - Hostname: orderer1
+  - Name: Orderer2
+    Domain: orderer2.orderer.com
+    Specs:
+      - Hostname: orderer0
+PeerOrgs:
+  - Name: Merchant1
+    Domain: merchant1.merchant.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Merchant2
+    Domain: merchant2.merchant.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Merchant3
+    Domain: merchant3.merchant.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Merchant4
+    Domain: merchant4.merchant.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: LeadMerchant
+    Domain: leadmerchant.merchant.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: tuzo
+    Domain: tuzo.platform.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1

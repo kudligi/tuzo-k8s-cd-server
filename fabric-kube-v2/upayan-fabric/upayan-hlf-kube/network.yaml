@@ -1,0 +1,21 @@
+tlsEnabled: false
+useActualDomains: true
+network:
+  genesisProfile: OrdererGenesis
+  systemChannelID: testchainid
+  channels:
+    - name: common
+      orgs: &id001 [Merchant1, Merchant2, Merchant3, Merchant4, LeadMerchant, tuzo]
+    - name: private-1
+      orgs: &id002 [Merchant1, LeadMerchant, tuzo]
+  chaincodes:
+    - name: very-simple
+      Version: #v2
+      orgs: [Merchant3, tuzo, LeadMerchant, Merchant2, Merchant4, Merchant1]
+      channels:
+        - name: common
+          orgs: *id001
+          policy: OR('Merchant1MSP.member', 'Merchant2MSP.member', 'Merchant3MSP.member', 'Merchant4MSP.member', 'LeadMerchantMSP.member', 'tuzoMSP.member')
+        - name: private-1
+          orgs: *id002
+          policy: OR('Merchant1MSP.member', 'LeadMerchantMSP.member', 'tuzoMSP.member')

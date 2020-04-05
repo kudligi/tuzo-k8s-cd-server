@@ -1,0 +1,231 @@
+name: upaayan-loyalty-platform
+x-type: hlfv1
+description: Loyalty Points Network
+version: '1.0'
+channels:
+    common:
+        orderers:
+            - orderer0.orderer1.orderer.com
+            - orderer1.orderer1.orderer.com
+            - orderer0.orderer2.orderer.com
+        peers:
+            peer0.merchant1.merchant.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+            peer0.merchant2.merchant.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+            peer0.merchant3.merchant.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+            peer0.merchant4.merchant.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+            peer0.leadmerchant.merchant.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+            peer1.leadmerchant.merchant.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+            peer0.tuzo.platform.com:
+                endorsingPeer: true
+                chaincodeQuery: true
+                ledgerQeury: true
+                eventSource: true
+organizations:
+    Merchant1:
+        mspid: Merchant1MSP
+        peers:
+            - peer0.merchant1.merchant.com
+        certificateAuthorities:
+            - ca-Merchant1
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant1.merchant.com/users/Admin@merchant1.merchant.com/msp/keystore/priv_sk
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant1.merchant.com/users/Admin@merchant1.merchant.com/msp/signcerts/Admin@merchant1.merchant.com-cert.pem
+    Merchant2:
+        mspid: Merchant2MSP
+        peers:
+            - peer0.merchant2.merchant.com
+        certificateAuthorities:
+            - ca-Merchant2
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant2.merchant.com/users/Admin@merchant2.merchant.com/msp/keystore/priv_sk
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant2.merchant.com/users/Admin@merchant2.merchant.com/msp/signcerts/Admin@merchant2.merchant.com-cert.pem
+    Merchant3:
+        mspid: Merchant3MSP
+        peers:
+            - peer0.merchant3.merchant.com
+        certificateAuthorities:
+            - ca-Merchant3
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant3.merchant.com/users/Admin@merchant3.merchant.com/msp/keystore/priv_sk
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant3.merchant.com/users/Admin@merchant3.merchant.com/msp/signcerts/Admin@merchant3.merchant.com-cert.pem
+    Merchant4:
+        mspid: Merchant4MSP
+        peers:
+            - peer0.merchant4.merchant.com
+        certificateAuthorities:
+            - ca-Merchant4
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant4.merchant.com/users/Admin@merchant4.merchant.com/msp/keystore/priv_sk
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant4.merchant.com/users/Admin@merchant4.merchant.com/msp/signcerts/Admin@merchant4.merchant.com-cert.pem
+    LeadMerchant:
+        mspid: LeadMerchantMSP
+        peers:
+            - peer0.leadmerchant.merchant.com
+            - peer1.leadmerchant.merchant.com
+        certificateAuthorities:
+            - ca-LeadMerchant
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/leadmerchant.merchant.com/users/Admin@leadmerchant.merchant.com/msp/keystore/priv_sk
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/leadmerchant.merchant.com/users/Admin@leadmerchant.merchant.com/msp/signcerts/Admin@leadmerchant.merchant.com-cert.pem
+    tuzo:
+        mspid: tuzoMSP
+        peers:
+            - peer0.tuzo.platform.com
+        certificateAuthorities:
+            - ca-tuzo
+        adminPrivateKey:
+            path: artifacts/channel/crypto-config/peerOrganizations/tuzo.platform.com/users/Admin@tuzo.platform.com/msp/keystore/priv_sk
+        signedCert:
+            path: artifacts/channel/crypto-config/peerOrganizations/tuzo.platform.com/users/Admin@tuzo.platform.com/msp/signcerts/Admin@tuzo.platform.com-cert.pem
+orderers:
+    orderer0.orderer1.orderer.com:
+        url: grpc://hlf-orderer--orderer1--orderer0:7050
+        gprcOptions:
+            ssl-target-name-override: orderer0.orderer1.orderer.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/ordererOrganizations/orderer1.orderer.com/orderers/orderer0.orderer1.orderer.com/tls/ca.crt
+    orderer1.orderer1.orderer.com:
+        url: grpc://hlf-orderer--orderer1--orderer1:7050
+        gprcOptions:
+            ssl-target-name-override: orderer1.orderer1.orderer.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/ordererOrganizations/orderer1.orderer.com/orderers/orderer1.orderer1.orderer.com/tls/ca.crt
+    orderer0.orderer2.orderer.com:
+        url: grpc://hlf-orderer--orderer2--orderer0:7050
+        gprcOptions:
+            ssl-target-name-override: orderer0.orderer2.orderer.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/ordererOrganizations/orderer2.orderer.com/orderers/orderer0.orderer2.orderer.com/tls/ca.crt
+peers:
+    peer0.merchant1.merchant.com:
+        url: grpc://hlf-peer--merchant1--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.merchant1.merchant.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant1.merchant.com/peers/peer0.merchant1.merchant.com/tls/ca.crt
+    peer0.merchant2.merchant.com:
+        url: grpc://hlf-peer--merchant2--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.merchant2.merchant.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant2.merchant.com/peers/peer0.merchant2.merchant.com/tls/ca.crt
+    peer0.merchant3.merchant.com:
+        url: grpc://hlf-peer--merchant3--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.merchant3.merchant.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant3.merchant.com/peers/peer0.merchant3.merchant.com/tls/ca.crt
+    peer0.merchant4.merchant.com:
+        url: grpc://hlf-peer--merchant4--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.merchant4.merchant.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant4.merchant.com/peers/peer0.merchant4.merchant.com/tls/ca.crt
+    peer0.leadmerchant.merchant.com:
+        url: grpc://hlf-peer--leadmerchant--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.leadmerchant.merchant.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/leadmerchant.merchant.com/peers/peer0.leadmerchant.merchant.com/tls/ca.crt
+    peer1.leadmerchant.merchant.com:
+        url: grpc://hlf-peer--leadmerchant--peer1:7051
+        gprcOptions:
+            ssl-target-name-override: peer1.leadmerchant.merchant.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/leadmerchant.merchant.com/peers/peer1.leadmerchant.merchant.com/tls/ca.crt
+    peer0.tuzo.platform.com:
+        url: grpc://hlf-peer--tuzo--peer0:7051
+        gprcOptions:
+            ssl-target-name-override: peer0.tuzo.platform.com
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/tuzo.platform.com/peers/peer0.tuzo.platform.com/tls/ca.crt
+certificateAuthorities:
+    ca-Merchant1:
+        url: http://hlf-ca--merchant1:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant1.merchant.com/ca/ca.merchant1.merchant.com-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant1
+    ca-Merchant2:
+        url: http://hlf-ca--merchant2:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant2.merchant.com/ca/ca.merchant2.merchant.com-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant2
+    ca-Merchant3:
+        url: http://hlf-ca--merchant3:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant3.merchant.com/ca/ca.merchant3.merchant.com-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant3
+    ca-Merchant4:
+        url: http://hlf-ca--merchant4:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/merchant4.merchant.com/ca/ca.merchant4.merchant.com-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-Merchant4
+    ca-LeadMerchant:
+        url: http://hlf-ca--leadmerchant:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/leadmerchant.merchant.com/ca/ca.leadmerchant.merchant.com-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-LeadMerchant
+    ca-tuzo:
+        url: http://hlf-ca--tuzo:7054
+        httpOptions:
+            verify: 'false'
+        tlsCACerts:
+            path: artifacts/channel/crypto-config/peerOrganizations/tuzo.platform.com/ca/ca.tuzo.platform.com-cert.pem
+        registrar:
+            - enrollId: admin
+              enrollSecret: adminpw
+        caName: ca-tuzo

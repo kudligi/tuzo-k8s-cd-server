@@ -35,7 +35,7 @@ organizations:
         certificateAuthorities:
             - ca-LeadMerchant
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/keystore/a66c2e92a10dd917400734780b0721e8d25ed2cbf825bfc67da74707b771e02d_sk
+            path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/keystore/43c0400d3c1d0246658ca9fe6ad4c73d02348886b88a6d4b8bbdc11b27b3e23e_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.lead.merchant/users/Admin@org.lead.merchant/msp/signcerts/Admin@org.lead.merchant-cert.pem
     Merchant1:
@@ -45,7 +45,7 @@ organizations:
         certificateAuthorities:
             - ca-Merchant1
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/keystore/381fd6640d21b5c1f29bdd37d0558009d73ecec00e9ea5323af26350da87f244_sk
+            path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/keystore/616bdff93c2eb13b85791e25319746331af22a3a34b6c4915e2b1010ffd2972c_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.redeem.merchant.one/users/Admin@org.redeem.merchant.one/msp/signcerts/Admin@org.redeem.merchant.one-cert.pem
     Merchant2:
@@ -55,7 +55,7 @@ organizations:
         certificateAuthorities:
             - ca-Merchant2
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/keystore/2608da5208840690044f584baf6e74b700e037a9ea928ee655f3caccc1776160_sk
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/keystore/c547250e89023a33ed1acf0f44fabd62df64b926f1a2f8b40509ad277101de23_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.issue.merchant.two/users/Admin@org.issue.merchant.two/msp/signcerts/Admin@org.issue.merchant.two-cert.pem
     Merchant3:
@@ -65,7 +65,7 @@ organizations:
         certificateAuthorities:
             - ca-Merchant3
         adminPrivateKey:
-            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/keystore/f9c209ad0951c4c376675adc0926e931205c1e85a1fba36f09e933e94860ac40_sk
+            path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/keystore/c671fabd5b68db0bf00500adefd065a0e9586fbd226d0e17e08c36074cf8ab7f_sk
         signedCert:
             path: artifacts/channel/crypto-config/peerOrganizations/org.issueandredeem.merchant.three/users/Admin@org.issueandredeem.merchant.three/msp/signcerts/Admin@org.issueandredeem.merchant.three-cert.pem
 orderers:

@@ -1,0 +1,296 @@
+Organizations:
+  - &id004
+    Name: Orderer1MSP
+    ID: Orderer1MSP
+    MSPDir: crypto-config/ordererOrganizations/orderer1.orderer.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('Orderer1MSP.member')
+      Writers:
+        Type: Signature
+        Rule: OR('Orderer1MSP.member')
+      Admins:
+        Type: Signature
+        Rule: OR('Orderer1MSP.member')
+  - &id005
+    Name: Orderer2MSP
+    ID: Orderer2MSP
+    MSPDir: crypto-config/ordererOrganizations/orderer2.orderer.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('Orderer2MSP.member')
+      Writers:
+        Type: Signature
+        Rule: OR('Orderer2MSP.member')
+      Admins:
+        Type: Signature
+        Rule: OR('Orderer2MSP.member')
+  - &id010
+    Name: Merchant1MSP
+    ID: Merchant1MSP
+    MSPDir: crypto-config/peerOrganizations/merchant1.merchant.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('Merchant1MSP.admin', 'Merchant1MSP.peer', 'Merchant1MSP.client')
+      Writers:
+        Type: Signature
+        Rule: OR('Merchant1MSP.admin', 'Merchant1MSP.client')
+      Admins:
+        Type: Signature
+        Rule: OR('Merchant1MSP.admin')
+    AnchorPeers:
+      - Host: peer0.merchant1.merchant.com
+        Port: 7051
+  - &id011
+    Name: Merchant2MSP
+    ID: Merchant2MSP
+    MSPDir: crypto-config/peerOrganizations/merchant2.merchant.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('Merchant2MSP.admin', 'Merchant2MSP.peer', 'Merchant2MSP.client')
+      Writers:
+        Type: Signature
+        Rule: OR('Merchant2MSP.admin', 'Merchant2MSP.client')
+      Admins:
+        Type: Signature
+        Rule: OR('Merchant2MSP.admin')
+    AnchorPeers:
+      - Host: peer0.merchant2.merchant.com
+        Port: 7051
+  - &id012
+    Name: Merchant3MSP
+    ID: Merchant3MSP
+    MSPDir: crypto-config/peerOrganizations/merchant3.merchant.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('Merchant3MSP.admin', 'Merchant3MSP.peer', 'Merchant3MSP.client')
+      Writers:
+        Type: Signature
+        Rule: OR('Merchant3MSP.admin', 'Merchant3MSP.client')
+      Admins:
+        Type: Signature
+        Rule: OR('Merchant3MSP.admin')
+    AnchorPeers:
+      - Host: peer0.merchant3.merchant.com
+        Port: 7051
+  - &id013
+    Name: Merchant4MSP
+    ID: Merchant4MSP
+    MSPDir: crypto-config/peerOrganizations/merchant4.merchant.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('Merchant4MSP.admin', 'Merchant4MSP.peer', 'Merchant4MSP.client')
+      Writers:
+        Type: Signature
+        Rule: OR('Merchant4MSP.admin', 'Merchant4MSP.client')
+      Admins:
+        Type: Signature
+        Rule: OR('Merchant4MSP.admin')
+    AnchorPeers:
+      - Host: peer0.merchant4.merchant.com
+        Port: 7051
+  - &id014
+    Name: LeadMerchantMSP
+    ID: LeadMerchantMSP
+    MSPDir: crypto-config/peerOrganizations/leadmerchant.merchant.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('LeadMerchantMSP.admin', 'LeadMerchantMSP.peer', 'LeadMerchantMSP.client')
+      Writers:
+        Type: Signature
+        Rule: OR('LeadMerchantMSP.admin', 'LeadMerchantMSP.client')
+      Admins:
+        Type: Signature
+        Rule: OR('LeadMerchantMSP.admin')
+    AnchorPeers:
+      - Host: peer0.leadmerchant.merchant.com
+        Port: 7051
+  - &id015
+    Name: tuzoMSP
+    ID: tuzoMSP
+    MSPDir: crypto-config/peerOrganizations/tuzo.platform.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: OR('tuzoMSP.admin', 'tuzoMSP.peer', 'tuzoMSP.client')
+      Writers:
+        Type: Signature
+        Rule: OR('tuzoMSP.admin', 'tuzoMSP.client')
+      Admins:
+        Type: Signature
+        Rule: OR('tuzoMSP.admin')
+    AnchorPeers:
+      - Host: peer0.tuzo.platform.com
+        Port: 7051
+Capabilities:
+  Channel: &id003
+    V1_4_3: true
+  Orderer: &id002
+    V1_4_2: true
+  Application: &id001
+    V1_4_2: true
+Application:
+  Organizations: 
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: ANY Readers
+    Writers:
+      Type: ImplicitMeta
+      Rule: ANY Writers
+    Admins:
+      Type: ImplicitMeta
+      Rule: MAJORITY Admins
+  Capabilities: *id001
+Orderer:
+  OrdererType: etcdraft
+  Addresses: &id006
+    - orderer0.orderer1.orderer.com:7050
+  BatchTimeout: 1s
+  BatchSize: &id007
+    MaxMessageCount: 5
+    AbsoluteMaxBytes: 98 MB
+    PreferredMaxBytes: 1024 KB
+  EtcdRaft: &id008
+    Consenters:
+      - Host: orderer0.orderer1.orderer.com
+        Port: 7059
+        ClientTLSCert: crypto-config/ordererOrganizations/orderer1.orderer.com/orderers/orderer0.orderer1.orderer.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/orderer1.orderer.com/orderers/orderer0.orderer1.orderer.com/tls/server.crt
+      - Host: orderer1.orderer1.orderer.com
+        Port: 7059
+        ClientTLSCert: crypto-config/ordererOrganizations/orderer1.orderer.com/orderers/orderer1.orderer1.orderer.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/orderer1.orderer.com/orderers/orderer1.orderer1.orderer.com/tls/server.crt
+      - Host: orderer0.orderer2.orderer.com
+        Port: 7059
+        ClientTLSCert: crypto-config/ordererOrganizations/orderer2.orderer.com/orderers/orderer0.orderer2.orderer.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/orderer2.orderer.com/orderers/orderer0.orderer2.orderer.com/tls/server.crt
+    Options:
+      TickInterval: 500ms
+      ElectionTick: 10
+      HeartbeatTick: 1
+      MaxInflightBlocks: 5
+      SnapshotIntervalSize: 20 MB
+  Organizations: 
+  Policies: &id009
+    Readers:
+      Type: ImplicitMeta
+      Rule: ANY Readers
+    Writers:
+      Type: ImplicitMeta
+      Rule: ANY Writers
+    Admins:
+      Type: ImplicitMeta
+      Rule: MAJORITY Admins
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: ANY Writers
+  Capabilities: *id002
+Channel:
+  Policies: &id016
+    Readers:
+      Type: ImplicitMeta
+      Rule: ANY Readers
+    Writers:
+      Type: ImplicitMeta
+      Rule: ANY Writers
+    Admins:
+      Type: ImplicitMeta
+      Rule: MAJORITY Admins
+  Capabilities: *id003
+Profiles:
+  OrdererGenesis:
+    Orderer:
+      Organizations:
+        - *id004
+        - *id005
+      OrdererType: etcdraft
+      Addresses: *id006
+      BatchTimeout: 1s
+      BatchSize: *id007
+      EtcdRaft: *id008
+      Policies: *id009
+      Capabilities: *id002
+    Consortiums:
+      TheConsortium:
+        Organizations:
+          - *id010
+          - *id011
+          - *id012
+          - *id013
+          - *id014
+          - *id015
+    Policies: *id016
+    Capabilities: *id003
+  common:
+    Consortium: TheConsortium
+    Application:
+      Organizations:
+        - *id010
+        - *id011
+        - *id012
+        - *id013
+        - *id014
+        - *id015
+      Policies:
+        Readers:
+          Type: ImplicitMeta
+          Rule: ANY Readers
+        Writers:
+          Type: ImplicitMeta
+          Rule: ANY Writers
+        Admins:
+          Type: ImplicitMeta
+          Rule: MAJORITY Admins
+      Capabilities:
+        V1_4_2: true
+    Policies:
+      Readers:
+        Type: ImplicitMeta
+        Rule: ANY Readers
+      Writers:
+        Type: ImplicitMeta
+        Rule: ANY Writers
+      Admins:
+        Type: ImplicitMeta
+        Rule: MAJORITY Admins
+    Capabilities:
+      V1_4_3: true
+  private-1:
+    Consortium: TheConsortium
+    Application:
+      Organizations:
+        - *id010
+        - *id014
+        - *id015
+      Policies:
+        Readers:
+          Type: ImplicitMeta
+          Rule: ANY Readers
+        Writers:
+          Type: ImplicitMeta
+          Rule: ANY Writers
+        Admins:
+          Type: ImplicitMeta
+          Rule: MAJORITY Admins
+      Capabilities:
+        V1_4_2: true
+    Policies:
+      Readers:
+        Type: ImplicitMeta
+        Rule: ANY Readers
+      Writers:
+        Type: ImplicitMeta
+        Rule: ANY Writers
+      Admins:
+        Type: ImplicitMeta
+        Rule: MAJORITY Admins
+    Capabilities:
+      V1_4_3: true
